@@ -25,7 +25,10 @@ var main = (function($) { var _ = {
 			thumbnailsPerRow: 2,
 
 		// Side of main wrapper (must match "misc.main-side" in _vars.scss).
-			mainSide: 'right'
+			mainSide: 'right',
+
+		// Randomize initial slide
+			randomizeInitialSlide: false
 
 	},
 
@@ -509,8 +512,12 @@ var main = (function($) { var _ = {
 				// Show first slide if xsmall isn't active or it just deactivated.
 					skel.on('-xsmall !xsmall', function() {
 
-						if (_.current === null)
-							_.switchTo(0, true);
+						if (_.current === null) {
+							if (_.settings.randomizeInitialSlide)
+								_.switchTo(Math.floor(Math.random() * _.slides.length), true);
+							else
+								_.switchTo(0, true);
+						}
 
 					});
 
